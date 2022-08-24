@@ -77,10 +77,7 @@ some_lecturer = Lecturer('Some', 'Buddy')
 some_lecturer.courses_attached += ['Python']
 best_student.rate_lecture(some_lecturer, 'Python', 10)
 best_student.rate_lecture(some_lecturer, 'Python', 9.8)
-# best_student.rate_lecture(some_lecturer, 'Git', 10) # тест наличия курса
 
-# print(best_student.grades)
-# print(some_lecturer.leads_the_course)
 print(some_reviewer, '\n')
 print(some_lecturer, '\n')
 print(best_student, '\n')

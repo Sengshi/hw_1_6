@@ -8,14 +8,10 @@ class Student:
         self.grades = {}
 
     def __str__(self):
-        arith_mean = 0
-        for v in self.grades.values():
-            arith_mean += sum(v) / len(v)
-        arith_mean = arith_mean / len(self.grades.keys())
         learning = ', '.join(self.courses_in_progress)
         finished = ', '.join(self.finished_courses)
         return f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: ' \
-               f'{round(arith_mean, 1)}\nКурсы в процессе изучения: {learning}\nЗавершенные курсы: {finished}'
+               f'{round(self.average_rating(), 1)}\nКурсы в процессе изучения: {learning}\nЗавершенные курсы: {finished}'
 
     def rate_lecture(self, lecturer, course_leads, grade_lecture):
         if isinstance(lecturer, Lecturer) and course_leads in lecturer.courses_attached:
@@ -26,6 +22,13 @@ class Student:
                     lecturer.leads_the_course[course_leads] = [grade_lecture]
             else:
                 return 'Ошибка'
+
+    def average_rating(self):
+        av_rating = 0
+        for i in self.grades.values():
+            av_rating += sum(i) / len(i)
+        av_rating = av_rating / len(self.grades.keys())
+        return av_rating
 
 
 class Mentor:
@@ -54,12 +57,16 @@ class Reviewer(Mentor):
 
 
 class Lecturer(Mentor):
+
     def __str__(self):
+        return f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {round(self.average_rating(), 1)}'
+
+    def average_rating(self):
         av_rating = 0
         for i in self.leads_the_course.values():
             av_rating += sum(i) / len(i)
         av_rating = av_rating / len(self.leads_the_course.keys())
-        return f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {round(av_rating, 1)}'
+        return av_rating
 
 
 best_student = Student('Ruoy', 'Eman', 'your_gender')
@@ -73,11 +80,17 @@ some_reviewer.rate_hw(best_student, 'Python', 10)
 some_reviewer.rate_hw(best_student, 'Python', 10)
 some_reviewer.rate_hw(best_student, 'Python', 9.7)
 
-some_lecturer = Lecturer('Some', 'Buddy')
-some_lecturer.courses_attached += ['Python']
-best_student.rate_lecture(some_lecturer, 'Python', 10)
-best_student.rate_lecture(some_lecturer, 'Python', 9.8)
+lecturer1 = Lecturer('Some', 'Buddy')
+lecturer1.courses_attached += ['Python']
+best_student.rate_lecture(lecturer1, 'Python', 10)
+best_student.rate_lecture(lecturer1, 'Python', 9.8)
+lecturer2 = Lecturer('Some', 'Buddy')
+lecturer2.courses_attached += ['Python']
+lecturer2.courses_attached += ['Git']
+best_student.rate_lecture(lecturer2, 'Python', 10)
+best_student.rate_lecture(lecturer2, 'Python', 5)
+best_student.rate_lecture(lecturer2, 'Git', 1)
 
 print(some_reviewer, '\n')
-print(some_lecturer, '\n')
+print(lecturer1, '\n')
 print(best_student, '\n')

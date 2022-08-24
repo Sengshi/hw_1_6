@@ -96,7 +96,7 @@ def average_grade_lecturer(list_lecturer, course):
     for i in list_lecturer:
         if isinstance(i, Lecturer) and course in i.courses_attached:
             aver_grades += i.leads_the_course[course]
-    return f'Средняя оценка лекторов за лекции по "{course}" - {mean(aver_grades)} %'
+    return f'Средняя оценка лекторов за лекции по курсу "{course}" - {mean(aver_grades)} %'
 
 
 student_1 = Student('Ruoy', 'Eman', 'your_gender')

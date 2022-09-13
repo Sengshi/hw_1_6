@@ -39,6 +39,24 @@ class Student:
         av_rating = mean(all_grade)
         return round(av_rating, 1)
 
+    def __eq__(self, other):
+        if self.average_rating() == other.average_rating():
+            return f'Средние оценки студентов равны'
+        else:
+            return f'Средние оценки студентов не равны'
+
+    def __gt__(self, other):
+        if self.average_rating() < other.average_rating():
+            return f'Средния оценка студента {self.name} {self.surname} меньше, чем у {other.name} {other.surname}'
+        else:
+            return f'Средния оценка студента {self.name} {self.surname} больше, чем у {other.name} {other.surname}'
+
+    def __lt__(self, other):
+        if self.average_rating() > other.average_rating():
+            return f'Средния оценка студента {self.name} {self.surname} больше, чем у {other.name} {other.surname}'
+        else:
+            return f'Средния оценка студента {self.name} {self.surname} меньше, чем у {other.name} {other.surname}'
+
 
 class Mentor:
     def __init__(self, name, surname):
@@ -82,9 +100,27 @@ class Lecturer(Mentor):
         av_rating = mean(all_grade)
         return round(av_rating, 1)
 
+    def __eq__(self, other):
+        if self.average_rating() == other.average_rating():
+            return f'Средние оценки лекторов равны'
+        else:
+            return f'Средние оценки лекторов не равны'
+
+    def __gt__(self, other):
+        if self.average_rating() < other.average_rating():
+            return f'Средния оценка лектора {self.name} {self.surname} меньше, чем у {other.name} {other.surname}'
+        else:
+            return f'Средния оценка лектора {self.name} {self.surname} больше, чем у {other.name} {other.surname}'
+
+    def __lt__(self, other):
+        if self.average_rating() > other.average_rating():
+            return f'Средния оценка лектора {self.name} {self.surname} больше, чем у {other.name} {other.surname}'
+        else:
+            return f'Средния оценка лектора {self.name} {self.surname} меньше, чем у {other.name} {other.surname}'
+
 
 def average_grade_students(list_students, course):
-    aver_grades =[]
+    aver_grades = []
     for i in list_students:
         if isinstance(i, Student) and course in i.courses_in_progress:
             aver_grades += i.grades[course]
@@ -99,44 +135,49 @@ def average_grade_lecturer(list_lecturer, course):
     return f'Средняя оценка лекторов за лекции по курсу "{course}" - {mean(aver_grades)} %'
 
 
+# Создаем 2 экземпляра Student
 student_1 = Student('Ruoy', 'Eman', 'your_gender')
 student_1.courses_in_progress += ['Python', 'Git']
 student_1.finished_courses += ['Введение в программирование']
 student_2 = Student('Rubby', 'Weltson', 'male')
 student_2.courses_in_progress += ['Git']
 student_2.finished_courses += ['Старт в программировании']
-
+# Создаем 2 экземпляра Reviewer
 reviewer_1 = Reviewer('Some', 'Buddy')
 reviewer_1.courses_attached += ['Python']
 reviewer_2 = Reviewer('Alan', 'Fron')
 reviewer_2.courses_attached += ['Git']
-
+# Reviewer высставляем оценки студентам
 reviewer_1.rate_hw(student_1, 'Python', 10)
 reviewer_1.rate_hw(student_1, 'Python', 10)
 reviewer_1.rate_hw(student_1, 'Python', 9.7)
 reviewer_2.rate_hw(student_1, 'Git', 10)
 reviewer_2.rate_hw(student_2, 'Git', 10)
 reviewer_2.rate_hw(student_2, 'Git', 9.7)
-
+# Создаем 2 экземпляра Lecturer
 lecturer_1 = Lecturer('Some', 'Buddy')
 lecturer_1.courses_attached += ['Python']
 lecturer_2 = Lecturer('Frank', 'Summers')
 lecturer_2.courses_attached += ['Python', 'Git']
+# Lecturer высставляем оценки студентам (печатает ошибку)
+print(lecturer_1.rate_hw(student_1, 'Python', 9.7))
+# Student высставляем оценки лекторам
 student_1.rate_lecture(lecturer_1, 'Python', 10)
 student_1.rate_lecture(lecturer_1, 'Python', 9.8)
 student_1.rate_lecture(lecturer_2, 'Python', 10)
 student_1.rate_lecture(lecturer_2, 'Python', 10)
 student_1.rate_lecture(lecturer_2, 'Git', 9.9)
-
+# Вывод через изменненый __str__
 print(reviewer_1, '\n')
 print(lecturer_1, '\n')
 print(student_1, '\n')
-
-print(lecturer_1.average_rating() > lecturer_2.average_rating())
-print(lecturer_2.average_rating() > lecturer_1.average_rating())
-print(student_1.average_rating() > student_2.average_rating())
-print(student_2.average_rating() > student_1.average_rating())
-
+# Сравнение лекторов и студентов по средним оценкам
+print(lecturer_1 > lecturer_2)
+print(lecturer_1 < lecturer_2)
+print(student_1 > student_2)
+print(student_1 < student_2)
+print('\n')
+# Вывод средний оценки по всем студентам и лекторам за определенный курс
 course_s = 'Git'
 course_l = 'Python'
 print(average_grade_students(Student.students, course_s))

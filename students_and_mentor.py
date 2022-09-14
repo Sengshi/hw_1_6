@@ -173,9 +173,9 @@ print(lecturer_1, '\n')
 print(student_1, '\n')
 # Сравнение лекторов и студентов по средним оценкам
 print(lecturer_1 > lecturer_2)
-print(lecturer_1 < lecturer_2)
+print(lecturer_1 == lecturer_2)
 print(student_1 > student_2)
-print(student_1 < student_2)
+print(student_1 == student_2)
 print('\n')
 # Вывод средний оценки по всем студентам и лекторам за определенный курс
 course_s = 'Git'

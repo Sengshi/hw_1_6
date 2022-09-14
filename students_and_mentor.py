@@ -103,32 +103,32 @@ class Lecturer(Mentor):
         return round(av_rating, 1)
 
     def __eq__(self, other):
-        if not isinstance(other, Student):
+        if not isinstance(other, Lecturer):
             return f'{other.name} {other.surname} не лектор'
         return self.average_rating() == other.average_rating()
 
     def __gt__(self, other):
-        if not isinstance(other, Student):
+        if not isinstance(other, Lecturer):
             return f'{other.name} {other.surname} не лектор'
         return self.average_rating() > other.average_rating()
 
     def __lt__(self, other):
-        if not isinstance(other, Student):
+        if not isinstance(other, Lecturer):
             return f'{other.name} {other.surname} не лектор'
         return self.average_rating() < other.average_rating()
 
     def __ne__(self, other):
-        if not isinstance(other, Student):
+        if not isinstance(other, Lecturer):
             return f'{other.name} {other.surname} не лектор'
         return self.average_rating() != other.average_rating()
 
     def __le__(self, other):
-        if not isinstance(other, Student):
+        if not isinstance(other, Lecturer):
             return f'{other.name} {other.surname} не лектор'
         return self.average_rating() <= other.average_rating()
 
     def __ge__(self, other):
-        if not isinstance(other, Student):
+        if not isinstance(other, Lecturer):
             return f'{other.name} {other.surname} не лектор'
         return self.average_rating() >= other.average_rating()
 
@@ -193,7 +193,7 @@ print(lecturer_1 != lecturer_2)
 print(lecturer_1 >= lecturer_2)
 print(lecturer_1 <= lecturer_2)
 print(student_1 > student_2)
-print(student_1 == lecturer_2)
+print(student_1 == student_2)
 print(student_1 < student_2)
 print(student_1 != student_2)
 print(student_1 >= student_2)

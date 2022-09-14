@@ -37,21 +37,33 @@ class Student:
         return round(av_rating, 1)
 
     def __eq__(self, other):
+        if not isinstance(other, Student):
+            return f'{other.name} {other.surname} не студент'
         return self.average_rating() == other.average_rating()
 
     def __gt__(self, other):
+        if not isinstance(other, Student):
+            return f'{other.name} {other.surname} не студент'
         return self.average_rating() > other.average_rating()
 
     def __lt__(self, other):
+        if not isinstance(other, Student):
+            return f'{other.name} {other.surname} не студент'
         return self.average_rating() < other.average_rating()
 
     def __ne__(self, other):
+        if not isinstance(other, Student):
+            return f'{other.name} {other.surname} не студент'
         return self.average_rating() != other.average_rating()
 
     def __le__(self, other):
+        if not isinstance(other, Student):
+            return f'{other.name} {other.surname} не студент'
         return self.average_rating() <= other.average_rating()
 
     def __ge__(self, other):
+        if not isinstance(other, Student):
+            return f'{other.name} {other.surname} не студент'
         return self.average_rating() >= other.average_rating()
 
 
@@ -62,22 +74,19 @@ class Mentor:
         self.courses_attached = []
         self.leads_the_course = {}
 
-    def rate_hw(self, student, course, grade):
-        if isinstance(self, Reviewer) and isinstance(student, Student) and course in self.courses_attached:
-            if course in student.courses_in_progress:
-                if course in student.grades:
-                    student.grades[course] += [grade]
-                else:
-                    student.grades[course] = [grade]
-            else:
-                return 'Ошибка'
-        else:
-            return 'Ошибка'
-
 
 class Reviewer(Mentor):
     def __str__(self):
         return f'Имя: {self.name}\nФамилия: {self.surname}'
+
+    def rate_hw(self, student, course, grade):
+        if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
+            if course in student.grades:
+                student.grades[course] += [grade]
+            else:
+                student.grades[course] = [grade]
+        else:
+            return 'Ошибка'
 
 
 class Lecturer(Mentor):
@@ -94,21 +103,33 @@ class Lecturer(Mentor):
         return round(av_rating, 1)
 
     def __eq__(self, other):
+        if not isinstance(other, Student):
+            return f'{other.name} {other.surname} не лектор'
         return self.average_rating() == other.average_rating()
 
     def __gt__(self, other):
+        if not isinstance(other, Student):
+            return f'{other.name} {other.surname} не лектор'
         return self.average_rating() > other.average_rating()
 
     def __lt__(self, other):
+        if not isinstance(other, Student):
+            return f'{other.name} {other.surname} не лектор'
         return self.average_rating() < other.average_rating()
 
     def __ne__(self, other):
+        if not isinstance(other, Student):
+            return f'{other.name} {other.surname} не лектор'
         return self.average_rating() != other.average_rating()
 
     def __le__(self, other):
+        if not isinstance(other, Student):
+            return f'{other.name} {other.surname} не лектор'
         return self.average_rating() <= other.average_rating()
 
     def __ge__(self, other):
+        if not isinstance(other, Student):
+            return f'{other.name} {other.surname} не лектор'
         return self.average_rating() >= other.average_rating()
 
 
@@ -153,7 +174,7 @@ lecturer_1.courses_attached += ['Python']
 lecturer_2 = Lecturer('Frank', 'Summers')
 lecturer_2.courses_attached += ['Python', 'Git']
 # Lecturer высставляем оценки студентам (печатает ошибку)
-print(lecturer_1.rate_hw(student_1, 'Python', 9.7))
+# print(lecturer_1.rate_hw(student_1, 'Python', 9.7))
 # Student высставляем оценки лекторам
 student_1.rate_lecture(lecturer_1, 'Python', 10)
 student_1.rate_lecture(lecturer_1, 'Python', 9.8)
@@ -172,12 +193,12 @@ print(lecturer_1 != lecturer_2)
 print(lecturer_1 >= lecturer_2)
 print(lecturer_1 <= lecturer_2)
 print(student_1 > student_2)
-print(student_1 == student_2)
+print(student_1 == lecturer_2)
 print(student_1 < student_2)
 print(student_1 != student_2)
 print(student_1 >= student_2)
 print(student_1 <= student_2)
-print('\n')
+print()
 # Вывод средний оценки по студентам и лекторам за определенный курс
 students = [student_1, student_2]
 lectures = [lecturer_1, lecturer_2]
